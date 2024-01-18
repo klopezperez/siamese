@@ -64,13 +64,3 @@ def matrix_search(matrix, search_criteria = 'max'):
         pairs.append(chosen_pair)
 
     return pairs
-
-
-fps = np.random.randint(2, size=(5, 2048), dtype='int64')
-jt_m = jt_matrix(fps)
-prop = np.random.rand(5)
-sali_m = sali_matrix(jt_m, prop)
-
-print(sali_m)
-print(matrix_search(sali_m, 'max'))
-print(matrix_search(sali_m, 'min'))
