@@ -5,8 +5,8 @@ import argparse
 
 # Arguments
 parser = argparse.ArgumentParser(description='Generate the JT matrix')
-parser.add_argument('-f','file', metavar='file', type=str)
-parser.add_argument('-fp','fp_type', metavar='fp_type', type=str)
+parser.add_argument('-f','--file', metavar='file', type=str)
+parser.add_argument('-fp','--fp_type', metavar='fp_type', type=str)
 
 
 args = parser.parse_args()
