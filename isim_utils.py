@@ -8,6 +8,11 @@ def read_fp(filename, fp_type):
 
     return np.array(data[fp_type])
 
+def quick_jt(fp_1, fp_2):
+    s1 = np.sum(fp_1)
+    a = np.dot(fp_1, fp_2)
+    return a / (s1 + np.sum(fp_2) - a)
+
 def jt_matrix(fingerprints):
     matrix = []
     for fp_1 in fingerprints:
