@@ -13,7 +13,7 @@ args = parser.parse_args()
 matrix = np.load(args.matrix)
 
 # Search for pairs
-pairs = matrix_search(matrix, args.search_criteria)
+pairs = quick_matrix_search(matrix, args.search_criteria)
 
 # Save the pairs in a csv file
 df = pd.DataFrame(pairs)

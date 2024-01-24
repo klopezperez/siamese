@@ -1,3 +1,4 @@
+import math
 import numpy as np 
 import pickle
 import random
@@ -37,35 +38,29 @@ def sali_matrix(jt_matrix, prop):
     matrix = np.array(matrix)
     return matrix
 
-def matrix_search(matrix, search_criteria = 'max'):
-    if search_criteria == 'max':
-        target = -np.inf
-        def check(value, target):
-            return value > target
-    if search_criteria == 'min':
-        target = np.inf
-        def check(value, target):
-            return value < target
-    
-    remaining = np.array(range(matrix.shape[0]))
+def quick_matrix_search(matrix, search_criteria = 'max'):
+    # Find the index of the max value in the matrix using np.argmax and np.unravel_index
     pairs = []
+    if search_criteria == 'max':
+        np.fill_diagonal(matrix, -np.inf)
+        while len(pairs) < math.floor(len(matrix)/2):    
+            max_index = np.argmax(matrix)
+            indexes = np.unravel_index(max_index, matrix.shape)
+            matrix[indexes[0],:] = -np.inf
+            matrix[indexes[1],:] = -np.inf
+            matrix[:,indexes[0]] = -np.inf
+            matrix[:,indexes[1]] = -np.inf
+            pairs.append(indexes)
 
-    while len(remaining) > 1:
-        for i in remaining:
-            for j in remaining:
-                if i != j:
-                    if check(matrix[i,j], target):
-                        target = matrix[i,j]
-                        chosen_pair = [i,j]
-                    
-        print('remaining: ', remaining)
-        print('chosen pair: ', chosen_pair)
-        mask = np.isin(remaining, chosen_pair)
-        remaining = remaining[~mask]
-        print('remaining: ', remaining)
-
-        if search_criteria == 'max': target = -np.inf
-        if search_criteria == 'min': target = np.inf
-        pairs.append(chosen_pair)
+    elif search_criteria == 'min':
+        np.fill_diagonal(matrix, np.inf)
+        while len(pairs) < math.floor(len(matrix)/2):
+            min_index = np.argmin(matrix)
+            indexes = np.unravel_index(min_index, matrix.shape)
+            matrix[indexes[0],:] = np.inf
+            matrix[indexes[1],:] = np.inf
+            matrix[:,indexes[0]] = np.inf
+            matrix[:,indexes[1]] = np.inf
+            pairs.append(indexes)
 
     return pairs
